@@ -14,7 +14,7 @@
         ],
         "responses":{  
           "200":{  
-            "description":"Hero model count",
+            "description":"Character model count",
             "content":{  
               "application/json":{  
                 "schema":{  
@@ -51,7 +51,7 @@
         ],
         "responses":{  
           "204":{  
-            "description":"Hero PATCH success"
+            "description":"Character PATCH success"
           }
         },
         "parameters":[  
@@ -59,7 +59,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -68,7 +68,7 @@
           "content":{  
             "application/json":{  
               "schema":{  
-                "$ref":"#/components/schemas/Hero"
+                "$ref":"#/components/schemas/Character"
               }
             }
           },
@@ -78,16 +78,37 @@
       "get":{  
         "x-controller-name":"HeroController",
         "x-operation-name":"findById",
+        "operationId": "getCharacter",
         "tags":[  
           "HeroController"
         ],
         "responses":{  
-          "200":{  
-            "description":"Hero model instance",
+          "200":{
+            "links": {
+              "friend": {
+                "operationId": "getCharacter",
+                "parameters": {
+                  "id": "$response.body#/friendId"
+                }
+              },
+              "species": {
+                "operationId": "getSpecies",
+                "parameters": {
+                  "id": "$response.body#/speciesId"
+                }
+              },
+              "planet": {
+                "operationId": "getPlanet",
+                "parameters": {
+                  "id": "$response.body#/planetId"
+                }
+              }
+            },  
+            "description":"Character model instance",
             "content":{  
               "application/json":{  
                 "schema":{  
-                  "$ref":"#/components/schemas/Hero"
+                  "$ref":"#/components/schemas/Character"
                 }
               }
             }
@@ -98,7 +119,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -112,7 +133,7 @@
         ],
         "responses":{  
           "204":{  
-            "description":"Hero DELETE success"
+            "description":"Character DELETE success"
           }
         },
         "parameters":[  
@@ -120,7 +141,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -136,11 +157,11 @@
         ],
         "responses":{  
           "200":{  
-            "description":"Hero model instance",
+            "description":"Character model instance",
             "content":{  
               "application/json":{  
                 "schema":{  
-                  "$ref":"#/components/schemas/Hero"
+                  "$ref":"#/components/schemas/Character"
                 }
               }
             }
@@ -150,7 +171,7 @@
           "content":{  
             "application/json":{  
               "schema":{  
-                "$ref":"#/components/schemas/Hero"
+                "$ref":"#/components/schemas/Character"
               }
             }
           }
@@ -164,7 +185,7 @@
         ],
         "responses":{  
           "200":{  
-            "description":"Hero PATCH success count",
+            "description":"Character PATCH success count",
             "content":{  
               "application/json":{  
                 "schema":{  
@@ -194,7 +215,7 @@
           "content":{  
             "application/json":{  
               "schema":{  
-                "$ref":"#/components/schemas/Hero"
+                "$ref":"#/components/schemas/Character"
               }
             }
           }
@@ -207,14 +228,34 @@
           "HeroController"
         ],
         "responses":{  
-          "200":{  
-            "description":"Array of Hero model instances",
+          "200":{ 
+            "description":"Array of Character model instances",
             "content":{  
               "application/json":{  
                 "schema":{  
                   "type":"array",
                   "items":{  
-                    "$ref":"#/components/schemas/Hero"
+                    "$ref":"#/components/schemas/Character",
+                    "links": {
+                      "friend": {
+                        "operationId": "getCharacter",
+                        "parameters": {
+                          "id": "$response.body#/friendId"
+                        }
+                      },
+                      "species": {
+                        "operationId": "getSpecies",
+                        "parameters": {
+                          "id": "$response.body#/speciesId"
+                        }
+                      },
+                      "planet": {
+                        "operationId": "getPlanet",
+                        "parameters": {
+                          "id": "$response.body#/planetId"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -252,44 +293,261 @@
                   "items":{  
                     "type":"string"
                   }
-                },
-                "include":{  
+                }
+              },
+              "type":"object"
+            }
+          }
+        ]
+      }
+    },
+    "/planets/count":{  
+      "get":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"count",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Planet model count",
+            "content":{  
+              "application/json":{  
+                "schema":{  
+                  "type":"object",
+                  "properties":{  
+                    "count":{  
+                      "type":"number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"where",
+            "in":"query",
+            "style":"deepObject",
+            "explode":true,
+            "schema":{  
+              "type":"object"
+            }
+          }
+        ]
+      }
+    },
+    "/planets/{id}":{  
+      "patch":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"updateById",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "204":{  
+            "description":"Planet PATCH success"
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"id",
+            "in":"path",
+            "schema":{  
+              "type":"number"
+            },
+            "required":true
+          }
+        ],
+        "requestBody":{  
+          "content":{  
+            "application/json":{  
+              "schema":{  
+                "$ref":"#/components/schemas/Planet"
+              }
+            }
+          },
+          "x-parameter-index":1
+        }
+      },
+      "get":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"findById",
+        "operationId": "getPlanet",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Planet model instance",
+            "content":{  
+              "application/json":{  
+                "schema":{  
+                  "$ref":"#/components/schemas/Planet"
+                }
+              }
+            }
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"id",
+            "in":"path",
+            "schema":{  
+              "type":"number"
+            },
+            "required":true
+          }
+        ]
+      },
+      "delete":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"deleteById",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "204":{  
+            "description":"Planet DELETE success"
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"id",
+            "in":"path",
+            "schema":{  
+              "type":"number"
+            },
+            "required":true
+          }
+        ]
+      }
+    },
+    "/planets":{  
+      "post":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"create",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Planet model instance",
+            "content":{  
+              "application/json":{  
+                "schema":{  
+                  "$ref":"#/components/schemas/Planet"
+                }
+              }
+            }
+          }
+        },
+        "requestBody":{  
+          "content":{  
+            "application/json":{  
+              "schema":{  
+                "$ref":"#/components/schemas/Planet"
+              }
+            }
+          }
+        }
+      },
+      "patch":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"updateAll",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Planet PATCH success count",
+            "content":{  
+              "application/json":{  
+                "schema":{  
+                  "type":"object",
+                  "properties":{  
+                    "count":{  
+                      "type":"number"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"where",
+            "in":"query",
+            "style":"deepObject",
+            "explode":true,
+            "schema":{  
+              "type":"object"
+            }
+          }
+        ],
+        "requestBody":{  
+          "content":{  
+            "application/json":{  
+              "schema":{  
+                "$ref":"#/components/schemas/Planet"
+              }
+            }
+          }
+        }
+      },
+      "get":{  
+        "x-controller-name":"PlanetController",
+        "x-operation-name":"find",
+        "tags":[  
+          "PlanetController"
+        ],
+        "responses":{  
+          "200":{  
+            "description":"Array of Planet model instances",
+            "content":{  
+              "application/json":{  
+                "schema":{  
                   "type":"array",
                   "items":{  
-                    "type":"object",
-                    "properties":{  
-                      "relation":{  
-                        "type":"string"
-                      },
-                      "scope":{  
-                        "properties":{  
-                          "where":{  
-                            "type":"object"
-                          },
-                          "fields":{  
-                            "type":"object"
-                          },
-                          "offset":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "limit":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "skip":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "order":{  
-                            "type":"array",
-                            "items":{  
-                              "type":"string"
-                            }
-                          }
-                        }
-                      }
-                    }
+                    "$ref":"#/components/schemas/Planet"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters":[  
+          {  
+            "name":"filter",
+            "in":"query",
+            "style":"deepObject",
+            "explode":true,
+            "schema":{  
+              "properties":{  
+                "where":{  
+                  "type":"object"
+                },
+                "fields":{  
+                  "type":"object"
+                },
+                "offset":{  
+                  "type":"integer",
+                  "minimum":0
+                },
+                "limit":{  
+                  "type":"integer",
+                  "minimum":0
+                },
+                "skip":{  
+                  "type":"integer",
+                  "minimum":0
+                },
+                "order":{  
+                  "type":"array",
+                  "items":{  
+                    "type":"string"
                   }
                 }
               },
@@ -353,7 +611,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -372,11 +630,20 @@
       "get":{  
         "x-controller-name":"SpeciesController",
         "x-operation-name":"findById",
+        "operationId": "getSpecies",
         "tags":[  
           "SpeciesController"
         ],
         "responses":{  
-          "200":{  
+          "200":{
+            "links": {
+              "planet": {
+                "operationId": "getPlanet",
+                "parameters": {
+                  "id": "$response.body#/planetId"
+                }
+              }
+            }, 
             "description":"Species model instance",
             "content":{  
               "application/json":{  
@@ -392,7 +659,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -414,7 +681,7 @@
             "name":"id",
             "in":"path",
             "schema":{  
-              "type":"string"
+              "type":"number"
             },
             "required":true
           }
@@ -508,7 +775,15 @@
                 "schema":{  
                   "type":"array",
                   "items":{  
-                    "$ref":"#/components/schemas/Species"
+                    "$ref":"#/components/schemas/Species",
+                    "links": {
+                      "planet": {
+                        "operationId": "getPlanet",
+                        "parameters": {
+                          "id": "$response.body#/planetId"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -546,45 +821,6 @@
                   "items":{  
                     "type":"string"
                   }
-                },
-                "include":{  
-                  "type":"array",
-                  "items":{  
-                    "type":"object",
-                    "properties":{  
-                      "relation":{  
-                        "type":"string"
-                      },
-                      "scope":{  
-                        "properties":{  
-                          "where":{  
-                            "type":"object"
-                          },
-                          "fields":{  
-                            "type":"object"
-                          },
-                          "offset":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "limit":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "skip":{  
-                            "type":"integer",
-                            "minimum":0
-                          },
-                          "order":{  
-                            "type":"array",
-                            "items":{  
-                              "type":"string"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
                 }
               },
               "type":"object"
@@ -601,50 +837,63 @@
   ],
   "components":{  
     "schemas":{  
+      "Character":{  
+        "title":"Character",
+        "properties":{  
+          "id":{  
+            "type":"number"
+          },
+          "name":{  
+            "type":"string"
+          },
+          "friendId":{  
+            "type":"number"
+          },
+          "planetId":{  
+            "type":"number"
+          },
+          "speciesId":{  
+            "type":"number"
+          }
+        },
+        "required":[  
+          "name"
+        ]
+      },
+      "Planet":{  
+        "title":"Planet",
+        "properties":{  
+          "id":{  
+            "type":"number"
+          },
+          "name":{  
+            "type":"string"
+          },
+          "climate":{  
+            "type":"string"
+          }
+        },
+        "required":[  
+          "name",
+          "climate"
+        ]
+      },
       "Species":{  
         "title":"Species",
         "properties":{  
           "id":{  
-            "type":"number",
-            "description":"Species id"
+            "type":"number"
           },
           "name":{  
             "type":"string",
             "description":"The species name"
           },
-          "planet":{  
-            "type":"string",
-            "description":"The planet the species is from"
+          "planetId":{  
+            "type":"number"
           },
           "lifespan":{  
             "type":"number",
             "description":"The lifespan of the species"
-          },
-          "heroId":{  
-            "type":"number"
-          }
-        }
-      },
-      "Hero":{  
-        "title":"Hero",
-        "properties":{  
-          "id":{  
-            "type":"number",
-            "description":"Hero id"
-          },
-          "name":{  
-            "type":"string",
-            "description":"The heroes' name"
-          },
-          "hasSuperPowers":{  
-            "type":"boolean",
-            "description":"Hero has super powers"
-          },
-          "species":{  
-            "type":"array",
-            "items":{  
-              "$ref":"#/components/schemas/Species"
-            }
           }
         }
       }

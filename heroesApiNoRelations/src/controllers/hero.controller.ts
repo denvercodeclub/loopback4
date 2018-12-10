@@ -15,7 +15,7 @@ import {
   del,
   requestBody,
 } from '@loopback/rest';
-import {Character, Planet, Species} from '../models';
+import {Character} from '../models';
 import {CharacterRepository} from '../repositories';
 
 export class HeroController {
@@ -118,47 +118,5 @@ export class HeroController {
   })
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.characterRepository.deleteById(id);
-  }
-
-  @get('/heroes/{id}/friend', {
-    responses: {
-      '200': {
-        description: 'Character model instance',
-        content: {'application/json': {schema: {'x-ts-type': Character}}},
-      },
-    },
-  })
-  async getFriend(
-    @param.path.number('id') heroId: typeof Character.prototype.id,
-  ): Promise<Character> {
-    return await this.characterRepository.friend(heroId);
-  }
-
-  @get('/heroes/{id}/planet', {
-    responses: {
-      '200': {
-        description: 'Character model instance',
-        content: {'application/json': {schema: {'x-ts-type': Planet}}},
-      },
-    },
-  })
-  async getPlanet(
-    @param.path.number('id') heroId: typeof Character.prototype.id,
-  ): Promise<Planet> {
-    return await this.characterRepository.planet(heroId);
-  }
-
-  @get('/heroes/{id}/species', {
-    responses: {
-      '200': {
-        description: 'Character model instance',
-        content: {'application/json': {schema: {'x-ts-type': Species}}},
-      },
-    },
-  })
-  async getSpecies(
-    @param.path.number('id') heroId: typeof Character.prototype.id,
-  ): Promise<Species> {
-    return await this.characterRepository.species(heroId);
   }
 }

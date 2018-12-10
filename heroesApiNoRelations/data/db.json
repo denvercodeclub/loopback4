@@ -13,7 +13,7 @@
     },
     "Character": {
       "1": "{\"id\":1,\"name\":\"Batman\",\"friendId\":2,\"planetId\":1,\"speciesId\":1}",
-      "2": "{\"id\":2,\"name\":\"Robin\",\"friendId\":1,\"planetId\":1,\"speciesId\":1}"
+      "2": "{\"id\":2,\"name\":\"Robin\",\"friendId\":1,\"planetId\":1,\"speciesId\":1,}"
     }
   }
 }

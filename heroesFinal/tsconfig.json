@@ -9,6 +9,8 @@
   "exclude": [
     "node_modules/**",
     "packages/*/node_modules/**",
-    "**/*.d.ts"
+    "**/*.d.ts",
+    "data/db.json",
+    "src/datasources/db.datasource.json"
   ]
 }

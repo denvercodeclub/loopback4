@@ -91,7 +91,7 @@ export class SpeciesController {
       },
     },
   })
-  async findById(@param.path.string('id') id: string): Promise<Species> {
+  async findById(@param.path.number('id') id: number): Promise<Species> {
     return await this.speciesRepository.findById(id);
   }
 
@@ -103,7 +103,7 @@ export class SpeciesController {
     },
   })
   async updateById(
-    @param.path.string('id') id: string,
+    @param.path.number('id') id: number,
     @requestBody() species: Species,
   ): Promise<void> {
     await this.speciesRepository.updateById(id, species);
@@ -116,7 +116,7 @@ export class SpeciesController {
       },
     },
   })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
+  async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.speciesRepository.deleteById(id);
   }
 }

@@ -1,22 +1,26 @@
-import {model, property, Entity, belongsTo} from '@loopback/repository';
-import { Hero } from './hero.model';
+import {model, property, Entity} from '@loopback/repository';
+import { Planet } from './planet.model';
 
 @model()
 export class Species extends Entity {
+
+  @property({
+    type: 'number',
+    id: true,
+  })
+  id?: number;;
+
   @property({
     name: 'name',
     description: "The species name",
     type: 'string',
-    id: true
   })
   name: string;
 
   @property({
-    name: 'planet',
-    description: "The planet the species is from",
-    type: 'string',
+    type: 'number',
   })
-  planet: string;
+  planetId: number;
   
   @property({
     name: 'lifespan',

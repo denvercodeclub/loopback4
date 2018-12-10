@@ -1,4 +1,4 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Entity, model, property, hasOne, hasMany, belongsTo} from '@loopback/repository';
 import { Planet } from './planet.model';
 import { Species } from './species.model';
 
@@ -9,7 +9,7 @@ export class Character extends Entity {
     type: 'number',
     id: true,
   })
-  id: number;
+  id?: number;
 
   @property({
     type: 'string',
@@ -17,13 +17,19 @@ export class Character extends Entity {
   })
   name: string;
 
-  @belongsTo(() => Character, {keyTo: 'id'})
+  @property({
+    type: 'number',
+  })
   friendId: number;
 
-  @belongsTo(() => Planet, {keyTo: 'id'})
+  @property({
+    type: 'number',
+  })
   planetId: number;
 
-  @belongsTo(() => Species, {keyTo: 'id'})
+  @property({
+    type: 'number',
+  })
   speciesId: number;
 
   constructor(data?: Partial<Character>) {
