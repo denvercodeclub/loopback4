@@ -1,19 +1,27 @@
 {
   "ids": {
-    "Planet": 2,
-    "Species": 2,
-    "Character": 3
+    "Planet": 4,
+    "Species": 4,
+    "Character": 5
   },
   "models": {
     "Planet": {
-      "1": "{\"id\":1,\"name\":\"Earth\",\"climate\":\"Earthy\"}"
+      "1": "{\"id\":1,\"name\":\"Earth\",\"climate\":\"Earthy\"}",
+      "2": "{\"id\":2,\"name\":\"Krypton\",\"climate\":\"Kryptony\"}",
+      "3": "{\"id\":3,\"name\":\"Themyscira\",\"climate\":\"Themysciray\"}"
+
     },
     "Species": {
-      "1": "{\"id\":1,\"name\":\"Human\",\"planetId\":1,\"lifespan\":80}"
+      "1": "{\"id\":1,\"name\":\"Human\",\"planetId\":1,\"lifespan\":80}",
+      "2": "{\"id\":2,\"name\":\"Kryptonian\",\"planetId\":2,\"lifespan\":200}",
+      "3": "{\"id\":3,\"name\":\"Demi-Goddess\",\"planetId\":3,\"lifespan\":1000}"
+
     },
     "Character": {
       "1": "{\"id\":1,\"name\":\"Batman\",\"friendId\":2,\"planetId\":1,\"speciesId\":1}",
-      "2": "{\"id\":2,\"name\":\"Robin\",\"friendId\":1,\"planetId\":1,\"speciesId\":1}"
+      "2": "{\"id\":2,\"name\":\"Robin\",\"friendId\":1,\"planetId\":1,\"speciesId\":1}",
+      "3": "{\"id\":3,\"name\":\"Superman\",\"friendId\":4,\"planetId\":2,\"speciesId\":2}",
+      "4": "{\"id\":4,\"name\":\"Wonder Woman\",\"friendId\":3,\"planetId\":3,\"speciesId\":3}"
     }
   }
 }
