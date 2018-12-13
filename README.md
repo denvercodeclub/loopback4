@@ -24,9 +24,10 @@
 ```
 
 ### Creating your first model
+
 * create a file under /src/models named `character.model.ts`
 
-```
+``` {typescript}
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -71,9 +72,12 @@ export class Character extends Entity {
 * add `export * from './character.model';` to index.ts
 
 ### Now we want to add a datasource
+
 * create two files, one called `db.datasource.json` and one called `db.datasouce.ts` in the folder /src/datasources
+
 * in `db.datasource.json` we want to add:
-```
+
+``` {json}
 {
     "name": "db",
     "connector": "memory",
@@ -81,8 +85,10 @@ export class Character extends Entity {
     "file": "./data/db.json"
 }
 ```
-  * in `db.datasource.ts` we want to add:
-```
+
+* in `db.datasource.ts` we want to add:
+
+``` {typesscipt}
 import {inject} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 import * as config from './db.datasource.json';
@@ -102,9 +108,10 @@ export class DbDataSource extends juggler.DataSource {
 * We now want to create a folder called `data` with a file called `db.json` in the root directory of the app.
 
 ## Next we are going to work on repository
+
 * create a file under /src/repositories named `character.repository.ts`
 
-```
+``` {typescript}
 import {inject} from '@loopback/core';
 
 export class CharacterRepository extends DefaultCrudRepository<
@@ -123,9 +130,10 @@ export class CharacterRepository extends DefaultCrudRepository<
 * add `export * from './character.repository;` to index.ts
 
 ### For the final step to get your app up and running we need to add a controller
+
 * create a file under /src/repositories named `character.controller.ts`
 
-```
+``` {typescript}
 import {
   Filter,
   repository,
@@ -236,6 +244,7 @@ export class HeroController {
 * add `export * from './character.controller;` to index.ts
 
 ### Now lets start our server:
+
 `npm run start`
 
 ## Part 2
@@ -244,7 +253,7 @@ export class HeroController {
 
 * first lets add `planet.model.ts`
 
-```
+``` {typescript}
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
@@ -275,7 +284,7 @@ export class Planet extends Entity {
 
 * next lets add `species.model.ts`
 
-```
+``` {typescript}
 import {model, property, Entity, belongsTo} from '@loopback/repository';
 import { Planet } from './planet.model';
 
@@ -314,7 +323,7 @@ export class Species extends Entity {
 
 * and now lets update `character.model.ts`
 
-```
+``` {typescript}
 import {Entity, model, property, belongsTo} from '@loopback/repository';
 import { Planet } from './planet.model';
 import { Species } from './species.model';
@@ -352,6 +361,7 @@ export class Character extends Entity {
 ### Now lets work on repositories
 
 * lets create the planet repository by running:
+
 `lb4 repository`
 
 ```
@@ -364,6 +374,7 @@ Repository Todo was created in src/repositories/
 ```
 
 * now lets create the species repository the same way:
+
 `lb4 repository`
 
 ```
@@ -375,7 +386,7 @@ Repository Todo was created in src/repositories/
 
 * and finally lets update the Character repository
 
-```
+``` {typescript}
 import {DefaultCrudRepository, juggler, BelongsToAccessor, repository} from '@loopback/repository';
 import {Character, Species, Planet} from '../models';
 import {DbDataSource} from '../datasources';
@@ -433,7 +444,7 @@ export class CharacterRepository extends DefaultCrudRepository<
 
 * We do want to add some new functionalities to the `character.controller.ts`. Add these new methods below the existing:
 
-```
+``` {typescript}
 @get('/heroes/{id}/friend', {
     responses: {
       '200': {
@@ -479,7 +490,7 @@ export class CharacterRepository extends DefaultCrudRepository<
 
 ### Finally we want to add some data to the db.json
 
-```
+``` {json}
 {
   "ids": {
     "Planet": 4,
@@ -538,7 +549,7 @@ export class CharacterRepository extends DefaultCrudRepository<
 
 * Add links on the endpoints `heroes/{id}` under the response:
 
-```
+``` {json}
 "links": {
     "friend": {
         "operationId": "getCurrentFriend",
@@ -564,4 +575,3 @@ export class CharacterRepository extends DefaultCrudRepository<
 * Update the operationId for the `heroes/{id}/character`, `heroes/{id}/planet`, and `heroes/{id}/species` endpoints.
 
 * Restart the oasgraph server
-
