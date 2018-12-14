@@ -1,0 +1,286 @@
+schema {
+  query: query
+  mutation: mutation
+}
+
+"""No description available."""
+type character {
+  id: Float
+  name: String
+  friendId: Float
+  planetId: Float
+  speciesId: Float
+  friend: character
+  planet: planet
+  species: species
+}
+
+input characterInput {
+  id: Float
+  name: String!
+  friendId: Float
+  planetId: Float
+  speciesId: Float
+}
+
+input filter2Input {
+  where: String
+  fields: String
+  offset: Int
+  limit: Int
+  skip: Int
+  order: [String]
+}
+
+input filterInput {
+  where: String
+  fields: String
+  offset: Int
+  limit: Int
+  skip: Int
+  order: [String]
+  include: [includeListItemInput]
+}
+
+"""No description available."""
+type heroes {
+  count: Float
+}
+
+"""No description available."""
+type heroesCount {
+  count: Float
+}
+
+input includeListItemInput {
+  relation: String
+  scope: scopeInput
+}
+
+"""The start of any mutation"""
+type mutation {
+  """
+  No description available.
+  
+  Equivalent to POST /heroes
+  """
+  postHeroes(
+    """No description available."""
+    characterInput: characterInput
+  ): character
+
+  """
+  No description available.
+  
+  Equivalent to PATCH /heroes
+  """
+  patchHeroes(
+    where: String
+
+    """No description available."""
+    characterInput: characterInput
+  ): heroes
+
+  """
+  No description available.
+  
+  Equivalent to POST /planets
+  """
+  postPlanets(
+    """No description available."""
+    planetInput: planetInput
+  ): planet
+
+  """
+  No description available.
+  
+  Equivalent to PATCH /planets
+  """
+  patchPlanets(
+    where: String
+
+    """No description available."""
+    planetInput: planetInput
+  ): planets
+
+  """
+  No description available.
+  
+  Equivalent to POST /species
+  """
+  postSpecies(
+    """No description available."""
+    speciesInput: speciesInput
+  ): species
+
+  """
+  No description available.
+  
+  Equivalent to PATCH /species
+  """
+  patchSpecies(
+    where: String
+
+    """No description available."""
+    speciesInput: speciesInput
+  ): species2
+}
+
+"""No description available."""
+type planet {
+  id: Float
+  name: String
+  climate: String
+}
+
+input planetInput {
+  id: Float
+  name: String!
+  climate: String!
+}
+
+"""No description available."""
+type planets {
+  count: Float
+}
+
+"""No description available."""
+type planetsCount {
+  count: Float
+}
+
+"""The start of any query"""
+type query {
+  """
+  No description available.
+  
+  Equivalent to GET /heroes/{id}
+  """
+  character(id: Float!): character
+
+  """
+  No description available.
+  
+  Equivalent to GET /planets/{id}
+  """
+  planet(id: Float!): planet
+
+  """
+  No description available.
+  
+  Equivalent to GET /heroes/{id}/planet
+  """
+  getCurrentPlanet(id: Float!): planet
+
+  """
+  No description available.
+  
+  Equivalent to GET /heroes/{id}/species
+  """
+  species(id: Float!): species
+
+  """
+  No description available.
+  
+  Equivalent to GET /heroes/count
+  """
+  heroesCount(where: String): heroesCount
+
+  """
+  No description available.
+  
+  Equivalent to GET /heroes
+  """
+  heroes2(filter: filterInput): [character]
+
+  """
+  No description available.
+  
+  Equivalent to GET /planets/count
+  """
+  planetsCount(where: String): planetsCount
+
+  """
+  No description available.
+  
+  Equivalent to GET /heroes/{id}/friend
+  """
+  getCurrentFriend(id: Float!): character
+
+  """
+  No description available.
+  
+  Equivalent to GET /planets
+  """
+  planets2(filter: filter2Input): [planet]
+
+  """
+  No description available.
+  
+  Equivalent to GET /species/count
+  """
+  speciesCount(where: String): speciesCount
+
+  """
+  No description available.
+  
+  Equivalent to GET /species/{id}/planet
+  """
+  getSpeciesIdPlanet(id: Float!): planet
+
+  """
+  No description available.
+  
+  Equivalent to GET /species/{id}
+  """
+  getSpeciesId(id: Float!): species
+
+  """
+  No description available.
+  
+  Equivalent to GET /species
+  """
+  species3(filter: filterInput): [species]
+}
+
+input scopeInput {
+  where: String
+  fields: String
+  offset: Int
+  limit: Int
+  skip: Int
+  order: [String]
+}
+
+"""No description available."""
+type species {
+  id: Float
+
+  """The species name"""
+  name: String
+  planetId: Float
+
+  """The lifespan of the species"""
+  lifespan: Float
+}
+
+"""No description available."""
+type species2 {
+  count: Float
+}
+
+"""No description available."""
+type speciesCount {
+  count: Float
+}
+
+input speciesInput {
+  id: Float
+
+  """The species name"""
+  name: String
+  planetId: Float
+
+  """The lifespan of the species"""
+  lifespan: Float
+}
