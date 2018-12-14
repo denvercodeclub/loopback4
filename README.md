@@ -1,15 +1,19 @@
-# Heroes Api with LoopBack 4 
+# Heroes Api with LoopBack 4
 
 ## Part 1
 
 ### Installing Loopback 4 
+
 `npm i -g @loopback/cli`
 
 ### Generating a base application
+
 `lb4 app`
 
 ### Select appropriate options:
-```? Project name: heroes
+
+```
+? Project name: heroes
 ? Project description: heroes api
 ? Project root directory: /heroes
 ? Application class name: Heroes
@@ -25,7 +29,11 @@
 
 ### Creating your first model
 
-* create a file under /src/models named `character.model.ts`
+* run `lb4 model` to generate your model
+
+  Or
+
+* create a file under /src/models named `character.model.ts` and add:
 
 ``` {typescript}
 import {Entity, model, property} from '@loopback/repository';
@@ -440,7 +448,7 @@ export class CharacterRepository extends DefaultCrudRepository<
 
 ### now for the controllers
 
-* We don't need to add the controllers for species and planet but we could by running lb4 controller and selecting the options.
+* We don't need to add the controllers for species and planet but we could by running `lb4 controller` and selecting the options.
 
 * We do want to add some new functionalities to the `character.controller.ts`. Add these new methods below the existing:
 
@@ -547,7 +555,7 @@ export class CharacterRepository extends DefaultCrudRepository<
 
 ### Now we want graphql to get the species, friend and planet data as well as the hero
 
-* Add links on the endpoints `heroes/{id}` under the response:
+* Add links on the `GET` endpoints `/heroes/{id}` and `/heroes` under the response:
 
 ``` {json}
 "links": {
